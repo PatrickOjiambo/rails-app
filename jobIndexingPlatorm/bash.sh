@@ -7,6 +7,7 @@ rails generate migration CreateCompanies name:string slug:string domain:string d
 
 rails generate migration CreateJobs company:references title:string description:text location:string remote:boolean employment_type:string experience_level:string department:string salary_min:decimal salary_max:decimal salary_currency:string requirements:json benefits:json external_id:string external_url:string posted_at:datetime expires_at:datetime active:boolean
 rails generate devise User first_name:string last_name:string email_verified:boolean last_active_at:datetime preferences:json
+rails generate migration CreateAlerts user:references name:string query:text filters:json frequency:string active:boolean last_run_at:datetime total_matches:integer unsubscribe_token:string
 
 # 4. Add search functionality
 rails generate migration AddSearchToJobs
