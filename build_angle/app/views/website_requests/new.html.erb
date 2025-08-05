@@ -1,0 +1,39 @@
+<h1>Build Your AI-Powered Website</h1>
+<p>Answer a few questions and our AI will generate a complete website for you.</p>
+
+<%= form_with(model: @website_request, local: true) do |form| %>
+  <% if @website_request.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@website_request.errors.count, "error") %> prohibited this from being saved:</h2>
+      <ul>
+        <% @website_request.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :email, 'Your Email Address' %><br>
+    <%= form.email_field :email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :business_type, 'What type of business is this?' %><br>
+    <%= form.select :business_type, ['Restaurant', 'Consulting Agency', 'Portfolio'] %>
+  </div>
+
+  <div class="field">
+    <%= form.label :design_preferences, 'Choose a design style' %><br>
+    <%= form.select :design_preferences, ['Modern', 'Minimalist', 'Classic'] %>
+  </div>
+
+  <div class="field">
+    <%= form.label :goals, 'What are the main goals of your website?' %><br>
+    <%= form.text_area :goals, placeholder: 'e.g., attract new clients, sell products, showcase my work...' %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Generate My Website!" %>
+  </div>
+<% end %>

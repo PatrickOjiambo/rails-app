@@ -1,0 +1,11 @@
+<h1>Request Status</h1>
+<p>Your request for a <%= @website_request.business_type %> website is: <strong><%= @website_request.status.humanize %></strong></p>
+
+<% if @website_request.complete? && @website_request.generated_website.present? %>
+  <p>Your website is ready!</p>
+<p>
+  <%= link_to "Preview Your Website", generated_website_path(@website_request.generated_website.subdomain), target: "_blank" %>
+</p>
+<% else %>
+  <p>We're hard at work building your site. We'll email you at <%= @website_request.email %> as soon as it's done.</p>
+<% end %>

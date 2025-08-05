@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  get 'generated_websites/show'
+  # Set the root to our questionnaire
+  root 'website_requests#new'
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
-
-  # Defines the root path route ("/")
-  # root "posts#index"
+  # Routes for creating and viewing the request status
+  resources :website_requests, only: [:new, :create, :show]
+resources :generated_websites, only: [:show], param: :subdomain do
+  get 'page/:page_type', to: 'generated_websites#show_page', as: 'page'
+end
+  # We'll add the preview route later
 end
