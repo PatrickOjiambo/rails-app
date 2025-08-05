@@ -1,7 +1,14 @@
 class ApplicationJob < ActiveJob::Base
-  # Automatically retry jobs that encountered a deadlock
-  # retry_on ActiveRecord::Deadlocked
-
-  # Most jobs are safe to ignore if the underlying records are no longer available
-  # discard_on ActiveJob::DeserializationError
+  include Sidekiq::Job
+  
+  retry_in do |count, exception|
+    case exception
+    when Net::TimeoutError, Faraday::TimeoutError
+      10 * (count + 1) # 10, 20, 30 seconds
+    else
+      :kill # Don't retry unknown exceptions
+    end
+  end
+  
+  sidekiq_options retry: 3, backtrace: 10
 end
