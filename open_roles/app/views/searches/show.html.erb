@@ -1,0 +1,40 @@
+
+<div class="container mx-auto px-4 py-4">
+  <h1 class="text-3xl font-bold text-center mb-4">Openroles</h1>
+  <p class="text-center text-gray-600 mb-8">Find your next role. Try "remote python" or "software engineer at google".</p>
+
+  <%= form_with(url: search_path, method: :get, class: "mb-8") do |form| %>
+    <div class="flex">
+      <%= form.text_field :query, value: @query, class: "w-full bg-slate-300 rounded-l-md border-gray-300 focus:ring-blue-500 focus:border-blue-500", placeholder: "Search for jobs..." %>
+      <%= form.submit "Search", class: "bg-blue-600 text-white px-6 py-2 rounded-r-md hover:bg-blue-700 cursor-pointer" %>
+    </div>
+  <% end %>
+
+  <div id="results">
+    <% if @jobs.any? %>
+      <h2 class="text-2xl font-semibold mb-4">
+        Results for "<%= @query %>"
+      </h2>
+      <div class="space-y-4">
+        <% @jobs.each do |job| %>
+          <div class="p-4 border rounded-lg shadow-sm bg-white">
+            <h3 class="text-xl font-bold"><%= job.title %></h3>
+            <p class="text-gray-700"><%= job.company.name %> - <%= job.location %></p>
+            <p class="text-gray-500 mt-2"><%= truncate(job.description, length: 150) %></p>
+            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mt-2"><%= job.job_type %></span>
+          </div>
+        <% end %>
+      </div>
+    <% elsif @query.present? %>
+      <p class="text-center text-gray-500">No jobs found matching your query.</p>
+    <% end %>
+    <% if @query.present? %>
+  <div class="my-4 text-center">
+    <%= form_with(model: Alert.new, url: alerts_path) do |form| %>
+      <%= form.hidden_field :query, value: @query %>
+      <%= form.submit "🔔 Create Alert for this Search", class: "bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 cursor-pointer" %>
+    <% end %>
+  </div>
+<% end %>
+  </div>
+</div>

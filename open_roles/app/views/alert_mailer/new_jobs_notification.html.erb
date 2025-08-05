@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-f8' http-equiv='Content-Type' />
+    <style>
+      /* Basic email styling */
+      body { font-family: sans-serif; color: #333; }
+      .container { padding: 20px; max-width: 600px; margin: auto; border: 1px solid #ddd; border-radius: 8px; }
+      .job { border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 10px; }
+      .footer { font-size: 12px; color: #777; margin-top: 20px; text-align: center; }
+      a { color: #007bff; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Hi <%= @user.email %>,</h2>
+      <p>We found <%= @jobs.count %> new job(s) matching your alert for "<strong><%= @alert.query %></strong>".</p>
+      <hr>
+      <% @jobs.each do |job| %>
+        <div class="job">
+          <strong><%= job.title %></strong> at <%= job.company.name %><br>
+          <em><%= job.location %> (<%= job.job_type %>)</em>
+        </div>
+      <% end %>
+      <div class="footer">
+        <p>
+          To stop receiving these notifications, you can
+          <%= link_to 'unsubscribe', unsubscribe_alert_url(@alert, token: @alert.unsubscribe_token) %>.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
+

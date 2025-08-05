@@ -1,0 +1,12 @@
+Hi <%= @user.email %>,
+
+We found <%= @jobs.count %> new job(s) matching your alert for "<%= @alert.query %>".
+
+---
+<% @jobs.each do |job| %>
+* <%= job.title %> at <%= job.company.name %> (<%= job.location %>)
+<% end %>
+---
+
+To stop receiving these notifications, visit this URL:
+<%= unsubscribe_alert_url(@alert, token: @alert.unsubscribe_token) %>
