@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  business_type: MyString
+  goals: MyText
+  design_preferences: MyString
+  content_needs: MyText
+  target_audience: MyString
+  email: MyString
+  status: MyString
+
+two:
+  business_type: MyString
+  goals: MyText
+  design_preferences: MyString
+  content_needs: MyText
+  target_audience: MyString
+  email: MyString
+  status: MyString
