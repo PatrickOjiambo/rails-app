@@ -1,15 +1,51 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>JobIndexingPlatorm</title>
+    <title><%= @page_title || 'OpenRoles - Find Your Next Job' %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="<%= @page_description || 'Discover job opportunities from companies worldwide. AI-powered job search and personalized alerts.' %>">
+    
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    
+    <!-- SEO and Social Meta -->
+    <meta property="og:title" content="<%= @page_title || 'OpenRoles' %>">
+    <meta property="og:description" content="<%= @page_description %>">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<%= request.original_url %>">
+    
+    <!-- JSON-LD for SEO -->
+    <% if @company %>
+      <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "<%= @company.name %>",
+          "description": "<%= @company.description %>",
+          "url": "<%= company_url(@company) %>"
+        }
+      </script>
+    <% end %>
   </head>
 
   <body>
-    <%= yield %>
+    <%= render 'shared/header' %>
+    
+    <main>
+      <% if notice %>
+        <div class="alert alert-success"><%= notice %></div>
+      <% end %>
+      
+      <% if alert %>
+        <div class="alert alert-danger"><%= alert %></div>
+      <% end %>
+      
+      <%= yield %>
+    </main>
+    
+    <%= render 'shared/footer' %>
   </body>
 </html>
